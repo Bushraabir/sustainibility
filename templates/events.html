@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore sustainability events that are making a difference in the world.">
+    <meta name="author" content="Sustainability Adventure Team">
+    <title>Sustainability Events</title>
+
+    <!-- Linking to the CSS file using Flask's url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+
+    <!-- Google Fonts: Playfair Display, Lora, Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/1.jpg') }}" type="image/x-icon">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="container">
+            <div class="logo">
+                <a href="/" class="logo-link">Sustainability Adventure</a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="#features" class="nav-btn"><i class="fas fa-cogs"></i> Features</a></li>
+                <li><a href="#rewards" class="nav-btn"><i class="fas fa-gift"></i> Rewards</a></li>
+                <li><a href="#events" class="nav-btn active"><i class="fas fa-calendar-day"></i> Events</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" aria-label="Open menu">
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="overlay"></div>
+        <video class="hero-video" autoplay muted loop>
+            <source src="{{ url_for('static', filename='videos/1.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span class="highlight-text">Sustainability</span> Events
+            </h1>
+            <p class="hero-description">
+                Join us in making a real impact. Participate in sustainability events, workshops, and campaigns that shape a better future.
+            </p>
+            <a href="#event-list" class="cta-button">
+                <i class="fas fa-calendar-check"></i> Explore Upcoming Events
+            </a>
+        </div>
+    </header>
+
+    <!-- GAMIFICATION PROGRESS BAR -->
+    <section id="user-progress" class="user-progress-section">
+        <div class="container">
+            <h2 class="progress-title">Your Progress</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                </div>
+                <p class="progress-text">50% to the next level: Sustainability Champion!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- UPCOMING EVENTS SECTION -->
+    <section id="event-list" class="event-list-section">
+        <div class="container">
+            <h2 class="section-title">Upcoming Events</h2>
+            <ul class="event-list">
+                <!-- Dynamic event cards will be inserted here -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- EVENT LEADERBOARD -->
+    <section id="leaderboard" class="leaderboard-section">
+        <div class="container">
+            <h2 class="leaderboard-title">Top Participants</h2>
+            <ul class="leaderboard-list">
+                <li class="leaderboard-item">
+                    <span class="leaderboard-rank">1</span>
+                    <span class="leaderboard-name">Jane D.</span>
+                    <span class="leaderboard-points">250 Points</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span class="leaderboard-rank">2</span>
+                    <span class="leaderboard-name">Michael T.</span>
+                    <span class="leaderboard-points">220 Points</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span class="leaderboard-rank">3</span>
+                    <span class="leaderboard-name">Lisa K.</span>
+                    <span class="leaderboard-points">200 Points</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SIGN UP FORM SECTION -->
+    <section id="signup" class="signup-section">
+        <div class="container">
+            <h2 class="section-title">Sign Up for an Event</h2>
+            <form class="signup-form">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Your Email Address" required>
+                </div>
+                <div class="form-group">
+                    <select id="event" required>
+                        <option value="" disabled selected>Select an Event</option>
+                        <option value="earth_day_cleanup">Earth Day Cleanup</option>
+                        <option value="sustainable_workshop">Sustainable Living Workshop</option>
+                        <option value="green_innovation_expo">Green Innovation Expo</option>
+                    </select>
+                </div>
+                <button type="submit" class="cta-button">
+                    <i class="fas fa-paper-plane"></i> Submit
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-top">
+                <div class="footer-links">
+                    <a href="#about"><i class="fas fa-info-circle"></i> About</a> |
+                    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a> |
+                    <a href="#features"><i class="fas fa-cogs"></i> Features</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <p>© 2024 Sustainability Adventure. All Rights Reserved. Together, we can create change.</p>
+        </div>
+    </footer>
+
+    <!-- Linking the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/events.js') }}"></script>
+
+</body>
+
+</html>

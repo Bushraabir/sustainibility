@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web page for the sustainability adventure, encouraging people to join and make a difference">
+    <meta name="author" content="Sustainability Adventure Team">
     <title>Sustainability Adventure</title>
-    
+
     <!-- Linking to the CSS file using Flask's url_for -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -17,12 +19,13 @@
 
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 
 <body>
     <div class="custom-cursor"></div>
 
-
+    <!-- HERO SECTION -->
     <header class="hero">
         <div class="overlay"></div>
         <video class="hero-video" autoplay muted loop>
@@ -42,85 +45,147 @@
         </div>
         <canvas class="particle-canvas"></canvas>
     </header>
-    
-
 
     <!-- NAVIGATION BAR -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Main Navigation">
         <div class="container">
             <div class="logo">
-                <a href="#">Sustainability Adventure</a>
+                <a href="#" class="logo-link">Sustainability Adventure</a>
             </div>
+
             <ul class="nav-links">
                 <li><a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About Us</a></li>
                 <li><a href="#features" class="nav-btn"><i class="fas fa-cogs"></i> Features</a></li>
                 <li><a href="#rewards" class="nav-btn"><i class="fas fa-gift"></i> Rewards</a></li>
-                <li><a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Get in Touch</a></li>
+                <li><a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
-            <button class="mobile-menu-toggle" aria-label="Open menu">&#9776;</button>
+
+            <button class="mobile-menu-toggle" aria-label="Open menu">
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+            </button>
         </div>
     </nav>
 
-    <!-- ABOUT SECTION WITH GAMIFICATION DESCRIPTION -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="about-section">
         <div class="container">
-            <h2>What is Sustainability Adventure?</h2>
-            <p>Join us on a journey of discovery where small actions lead to big rewards. Complete fun challenges, learn simple sustainability tips, and connect with a community of like-minded changemakers. Together, we can make the world a better place!</p>
+            <h2 class="about-title">Step Into the World of <span class="highlight">Sustainability</span></h2>
+            <p class="about-description">
+                Imagine a journey where every small action has a profound impact. <strong>Complete engaging challenges, learn actionable tips, and connect with a passionate community.</strong> This is more than an adventure; it's your chance to transform habits into meaningful change. Let's shape a sustainable future together.
+            </p>
+            <div class="interactive-cards">
+                <div class="card">
+                    <i class="fas fa-seedling card-icon"></i>
+                    <h3>Fun Challenges</h3>
+                    <p>Turn everyday tasks into opportunities for growth and rewards.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users card-icon"></i>
+                    <h3>Community Power</h3>
+                    <p>Share your journey, inspire others, and amplify the impact.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-brain card-icon"></i>
+                    <h3>Practical Insights</h3>
+                    <p>Learn sustainability tips you can easily integrate into your lifestyle.</p>
+                </div>
+            </div>
+            <a href="{{ url_for('login') }}" class="cta-button">
+                <i class="fas fa-arrow-right"></i> Start Your Journey
+            </a>
         </div>
     </section>
 
-    <!-- FEATURES SECTION WITH INTERACTIVE CARDS -->
+    <!-- FEATURES SECTION -->
     <section id="features" class="features-section">
         <div class="container">
-            <h2>Our Features</h2>
+            <h2 class="features-title">Explore Our <span class="highlight">Features</span></h2>
+            <p class="features-subtitle">Discover what makes our platform unique and how you can make an impact with every action you take.</p>
             <div class="feature-cards">
-                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
-                    <h3>Fun & Interactive Challenges</h3>
-                    <p>Complete challenges, earn points, and enjoy the rewards that come with making a difference!</p>
-                    <a href="#challenges" class="btn-link">Join Now</a>
+                <div class="feature-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');"></div>
+                    <div class="card-content">
+                        <h3>Fun & Interactive Challenges</h3>
+                        <p>Complete challenges, earn points, and enjoy the rewards that come with making a difference!</p>
+                        <a href="#challenges" class="btn-link"><i class="fas fa-play-circle"></i> Join Now</a>
+                    </div>
                 </div>
-                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
-                    <h3>Inspiring Success Stories</h3>
-                    <p>Get inspired by real people making a change and discover ways you can contribute to a sustainable future.</p>
-                    <a href="#stories" class="btn-link">Get Inspired</a>
+                <div class="feature-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/2.jpg') }}');"></div>
+                    <div class="card-content">
+                        <h3>Inspiring Success Stories</h3>
+                        <p>Get inspired by real people making a change and discover ways you can contribute to a sustainable future.</p>
+                        <a href="#stories" class="btn-link"><i class="fas fa-lightbulb"></i> Get Inspired</a>
+                    </div>
                 </div>
-                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
-                    <h3>Supportive Community</h3>
-                    <p>Join events, share your experiences, and become part of a community that believes in positive change!</p>
-                    <a href="#community" class="btn-link">Find Events Near You</a>
+
+                <div class="feature-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/3.jpg') }}');"></div>
+                    <div class="card-content">
+                        <h3>Supportive Community</h3>
+                        <p>Join events, share your experiences, and become part of a community that believes in positive change!</p>
+                        <a href="{{ url_for('events') }}" class="btn-link"><i class="fas fa-users"></i> Find Events</a>
+
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- REWARDS SECTION WITH POINTS SYSTEM -->
+    <!-- REWARDS SECTION -->
     <section id="rewards" class="rewards-section">
+        <div class="icon-wrapper" data-tooltip="Complete 10 challenges">
+            <i class="fas fa-seedling"></i>
+        </div>
+
         <div class="container">
-            <h2>Earn Rewards & Make a Difference</h2>
-            <p>Each action you take brings us one step closer to a more sustainable world. Earn badges, discounts, and more as a thank you for your commitment!</p>
-            <div class="rewards-cards">
-                <div class="reward-card">
-                    <h3>Eco Warrior</h3>
-                    <p>Complete 10 sustainability challenges and wear your badge with pride!</p>
+            <h2 class="rewards-title">Earn Rewards & Make a <span class="highlight">Difference</span></h2>
+            <p class="rewards-description">
+                Every action you take contributes to a better planet. Unlock achievements, climb the leaderboard, and celebrate your milestones as a sustainability champion.
+            </p>
+            <div class="rewards-progress">
+                <div class="reward">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                    <p>Eco Warrior (4/10 Challenges)</p>
                 </div>
-                <div class="reward-card">
-                    <h3>Green Leader</h3>
-                    <p>Reach 100 points and unlock a special surprise to celebrate your achievements!</p>
+                <div class="reward">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                    <p>Green Leader (70/100 Points)</p>
                 </div>
-                <div class="reward-card">
-                    <h3>Community Hero</h3>
-                    <p>Participate in 5 community events and earn bonus rewards for your efforts!</p>
+                <div class="reward">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%;"></div>
+                    </div>
+                    <p>Community Hero (1/5 Events)</p>
                 </div>
+            </div>
+            <div class="cta-container">
+                <a href="#get-started" class="cta-button"><i class="fas fa-trophy"></i> Start Your Journey</a>
             </div>
         </div>
     </section>
 
-    <!-- TESTIMONIALS SECTION WITH INTERACTIVE SCROLL SLIDER -->
+    <!-- TESTIMONIALS SECTION -->
     <section id="testimonials" class="testimonials-section">
         <div class="container">
-            <h2>What Our Community Says</h2>
+            <h2 class="testimonials-title">What Our Community Says</h2>
             <div class="testimonial-slider">
-                <div class="testimonial">
+                <div class="testimonial active">
                     <p>"This platform made sustainability so much fun! I'm learning and making a difference, and the rewards keep me motivated!"</p>
                     <h4>- Jane D.</h4>
                 </div>
@@ -133,18 +198,37 @@
                     <h4>- Lisa K.</h4>
                 </div>
             </div>
+            <div class="slider-controls">
+                <button class="prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="next"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
     </section>
+    <div class="slider-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section">
         <div class="container">
-            <h2>We’d Love to Hear From You</h2>
-            <p>If you have any questions, suggestions, or just want to share your journey with us, feel free to reach out!</p>
+            <h2 class="contact-title">We’d Love to Hear From You</h2>
+            <p class="contact-description">
+                Have a question, suggestion, or story to share? Reach out and let’s make a difference together!
+            </p>
             <form class="contact-form">
-                <input type="email" placeholder="Your email address" required>
-                <textarea placeholder="Your message" required></textarea>
-                <button type="submit" class="cta-button">Send Message</button>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Your email address" required>
+                    <small class="error-message">Please enter a valid email.</small>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder="Your message" required></textarea>
+                    <small class="error-message">Message cannot be empty.</small>
+                </div>
+                <button type="submit" class="cta-button">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
             </form>
         </div>
     </section>

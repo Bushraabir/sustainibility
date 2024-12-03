@@ -1,0 +1,409 @@
+/* Global Variables - Color Theme */
+:root {
+    --primary-color: #004d40; /* Deep Teal */
+    --secondary-color: #00332e; /* Muted Dark Green */
+    --accent-color: #f2c94c; /* Warm Metallic Gold */
+    --background-color: #2f3e46; /* Charcoal Grey */
+    --text-color: #b0b0b0; /* Soft Grey for Text */
+    --highlight-color: #f5c92c; /* Soft Gold Highlight */
+    --link-hover-color: #007bff; /* Standard Blue */
+    --text-shadow-color: rgba(0, 0, 0, 0.4);
+    --box-shadow-color: rgba(0, 0, 0, 0.2);
+    --hover-shadow-color: rgba(0, 0, 0, 0.25);
+
+    /* Background Effects */
+    --background-gradient: linear-gradient(120deg, rgba(0, 51, 46, 0.85), rgba(0, 77, 64, 0.6), rgba(0, 51, 46, 0.85));
+
+    /* Button and Link Interactions */
+    --cta-button-hover-scale: 1.1;
+    --button-hover-scale: 1.1;
+    --input-hover-border: #f2c94c;
+    
+    /* Typography */
+    --font-family: 'Playfair Display', serif;
+    --heading-font-size: 3.2rem;
+    --body-font-size: 1.1rem;
+    --line-height: 1.8;
+
+    /* Borders and Rounding */
+    --border-radius: 15px;
+
+    /* Animations */
+    --transition-speed: 0.3s ease;
+    --hover-scale: 1.05;
+
+    /* Miscellaneous */
+    --button-font-size: 1.3rem;
+}
+
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all var(--transition-speed);
+}
+
+/* Body and Main Layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: var(--line-height);
+    font-size: var(--body-font-size);
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Hero Section with Advanced Parallax Scrolling */
+.hero {
+    position: relative;
+    background: url('{{ url_for("static", filename="images/hero-background.jpg") }}') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 2rem 0;
+    background-blend-mode: overlay;
+    animation: fadeIn 1.5s ease-out, parallax 15s infinite linear;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Parallax Scrolling Effect */
+@keyframes parallax {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero .hero-content {
+    z-index: 1;
+    max-width: 700px;
+    transition: transform 0.3s ease;
+}
+
+.hero h1 {
+    font-size: var(--heading-font-size);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px var(--text-shadow-color);
+    letter-spacing: 1px;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.hero .cta-button {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 1.2rem 2.5rem;
+    font-size: var(--button-font-size);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: inline-block;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.hero .cta-button:hover {
+    background-color: #d1a44d;
+    transform: scale(var(--cta-button-hover-scale)) rotate(5deg);
+    box-shadow: 0 8px 20px var(--box-shadow-color);
+    transition: transform var(--transition-speed);
+}
+
+/* Event List Section */
+.event-list-section {
+    background-color: #fff;
+    padding: 3rem 0;
+    margin-top: 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 15px var(--box-shadow-color);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Event Card with Hover Effects */
+.event-card {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px var(--box-shadow-color);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    animation: slideIn 0.5s ease-out;
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px var(--hover-shadow-color);
+    background-color: var(--background-color);
+    color: #fff;
+    transition: box-shadow var(--transition-speed);
+}
+
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.event-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.event-date {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.event-description {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    transition: color 0.3s ease;
+}
+
+.event-card:hover .event-description {
+    color: #fff;
+}
+
+.cta-button {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 1rem 2rem;
+    font-size: var(--button-font-size);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: inline-block;
+    transition: all var(--transition-speed);
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #d1a44d;
+    transform: scale(var(--button-hover-scale));
+    box-shadow: 0 4px 15px var(--box-shadow-color);
+}
+
+/* Floating Action Button with Animation */
+.fab-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 1.2rem;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    transition: all var(--transition-speed);
+    box-shadow: 0 4px 10px var(--box-shadow-color);
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.fab-btn:hover {
+    background-color: #d1a44d;
+    transform: scale(1.1);
+}
+
+/* Pulse animation for FAB */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--highlight-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #f2c94c;
+}
+
+/* Floating Labels in Signup Form */
+.signup-section {
+    background-color: #fff;
+    padding: 3rem 0;
+    margin-top: 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 15px var(--box-shadow-color);
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 1.1rem;
+    font-size: 1.2rem;
+    border: 2px solid #ccc;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.8rem;
+    background-color: #f9f9f9;
+    transition: border var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+/* Floating Label */
+input:focus + label,
+select:focus + label {
+    top: -10px;
+    left: 0;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+
+/* Label for Floating Inputs */
+label {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    font-size: 1.1rem;
+    color: #bbb;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+button.cta-button {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    font-size: var(--button-font-size);
+    padding: 1.2rem 2.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    border: none;
+    width: 100%;
+    max-width: 400px;
+}
+
+button.cta-button:hover {
+    background-color: #d1a44d;
+    transform: scale(var(--button-hover-scale));
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .event-card {
+        padding: 1.5rem;
+    }
+
+    .cta-button {
+        font-size: 1.1rem;
+    }
+
+    .signup-form {
+        width: 90%;
+    }
+}

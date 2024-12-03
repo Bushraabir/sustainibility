@@ -1,0 +1,64 @@
+/* General Styles for Update Event Form */
+.update-event-section {
+    background-color: #fff;
+    padding: 3rem 0;
+    margin-top: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+input, textarea {
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #f2c94c;
+    outline: none;
+    box-shadow: 0 0 5px #f2c94c;
+}
+
+button.cta-button {
+    background-color: #f2c94c;
+    color: #00332e;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+button.cta-button:hover {
+    background-color: #d1a44d;
+    transform: scale(1.05);
+}

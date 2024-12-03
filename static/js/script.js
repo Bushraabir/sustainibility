@@ -1,6 +1,8 @@
 // Wait until the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     initUIInteractions();
+    initTestimonialSlider();
+    initContactForm();
 });
 
 // Initialize all UI interactions
@@ -9,6 +11,7 @@ function initUIInteractions() {
     initScrollAnimations();
     init3DButtonEffects();
     initParallaxEffect();
+    initRewardProgress();
     initTestimonialSlider();
     initDynamicStatCounters();
     initSmoothScroll();
@@ -391,3 +394,132 @@ document.addEventListener('DOMContentLoaded', () => {
         cursor.style.height = '20px';
     }
 });
+
+
+
+function initRewardProgress() {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    const rewardData = [
+        { element: progressBars[0], target: 40 }, // Eco Warrior: 40%
+        { element: progressBars[1], target: 70 }, // Green Leader: 70%
+        { element: progressBars[2], target: 20 }, // Community Hero: 20%
+    ];
+
+    rewardData.forEach((reward) => {
+        animateProgress(reward.element, reward.target);
+    });
+}
+
+function animateProgress(element, target) {
+    let width = 0;
+    const speed = 20; // Adjust for smoother/slower animation
+    const interval = setInterval(() => {
+        if (width >= target) {
+            clearInterval(interval);
+        } else {
+            width++;
+            element.style.width = `${width}%`;
+        }
+    }, speed);
+}
+
+
+
+
+
+
+
+// 14. Testimonial Slider with Autoplay and Navigation
+function initTestimonialSlider() {
+    const testimonials = document.querySelectorAll('.testimonial');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    let currentIndex = 0;
+
+    // Show the active testimonial
+    function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+            testimonial.classList.remove('active');
+            if (i === index) {
+                testimonial.classList.add('active');
+            }
+        });
+    }
+
+    // Navigate to the next testimonial
+    function nextTestimonial() {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        showTestimonial(currentIndex);
+    }
+
+    // Navigate to the previous testimonial
+    function prevTestimonial() {
+        currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+        showTestimonial(currentIndex);
+    }
+
+    // Add event listeners to navigation buttons
+    nextButton.addEventListener('click', nextTestimonial);
+    prevButton.addEventListener('click', prevTestimonial);
+
+    // Autoplay functionality
+    setInterval(nextTestimonial, 5000); // Change slide every 5 seconds
+}
+
+
+
+
+
+
+
+
+//14. validation and feed back
+function initContactForm() {
+    const form = document.querySelector('.contact-form');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const emailError = emailInput.nextElementSibling;
+    const messageError = messageInput.nextElementSibling;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let valid = true;
+
+        // Validate email
+        if (!validateEmail(emailInput.value)) {
+            emailError.style.display = 'block';
+            emailInput.classList.add('error');
+            valid = false;
+        } else {
+            emailError.style.display = 'none';
+            emailInput.classList.remove('error');
+        }
+
+        // Validate message
+        if (messageInput.value.trim() === '') {
+            messageError.style.display = 'block';
+            messageInput.classList.add('error');
+            valid = false;
+        } else {
+            messageError.style.display = 'none';
+            messageInput.classList.remove('error');
+        }
+
+        if (valid) {
+            form.reset();
+            alert('Thank you! Your message has been sent.');
+        }
+    });
+}
+
+// Helper function to validate email
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign up to create an account for event management.">
+    <meta name="author" content="Sustainability Adventure Team">
+    <title>Sign Up</title>
+
+    <!-- Linking to the CSS file using Flask's url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Google Fonts: Poppins and Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/" class="logo-link">Sustainability Adventure</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Form Section -->
+    <section class="signup-section">
+        <div class="container">
+            <h2>Create an Account</h2>
+            <form action="{{ url_for('signup') }}" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+
+                <button type="submit" class="cta-button">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <p>© 2024 Sustainability Adventure. All Rights Reserved. Together, we can create change.</p>
+        </div>
+    </footer>
+
+    <!-- Linking to the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
