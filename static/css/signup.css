@@ -1,0 +1,235 @@
+/* Global Variables for Premium Theme and Spacing */
+/* Theme Colors */
+:root {
+    --primary-color: #004d40; /* Deep Teal */
+    --secondary-color: #00332e; /* Muted Dark Green */
+    --accent-color: #f2c94c; /* Warm Metallic Gold */
+    --background-color: #2f3e46; /* Charcoal Grey */
+    --text-color: #b0b0b0; /* Soft Grey for Text */
+    --highlight-color: #f5c92c; /* Soft Gold Highlight */
+    --link-hover-color: #007bff; /* Standard Blue */
+    --text-shadow-color: rgba(0, 0, 0, 0.4);
+
+    /* Background Effects */
+    --background-gradient: linear-gradient(120deg, rgba(0, 51, 46, 0.85), rgba(0, 77, 64, 0.6), rgba(0, 51, 46, 0.85));
+
+    /* Button and Link Interactions */
+    --cta-button-hover-scale: 1.1;
+    --button-hover-scale: 1.1;
+
+    /* Typography */
+    --font-family: 'Playfair Display', serif; /* Added font-family variable */
+    --heading-font-size: 3rem;
+    --body-font-size: 1rem;
+    --line-height: 1.6;
+
+    /* Borders and Rounding */
+    --border-radius: 15px;
+
+    /* Animations */
+    --transition-speed: 0.4s ease;
+
+    /* Miscellaneous */
+    --button-font-size: 1.2rem;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--background-color);
+    color: var(--text-color);
+    line-height: var(--line-height);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.custom-cursor.hovered {
+    background-color: var(--highlight-color);
+    width: 20px;
+    height: 20px;
+    transform: scale(1.5);
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.navbar .logo {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.navbar .logo a {
+    color: #fff;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar .logo a:hover {
+    color: var(--accent-color);
+}
+
+/* Sign Up Section */
+.signup-section {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    background: var(--background-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-section h2 {
+    font-size: var(--heading-font-size);
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.signup-section .container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+}
+
+.signup-section .container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.signup-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-section .form-group {
+    margin-bottom: 20px;
+}
+
+.signup-section .form-group label {
+    font-size: 1rem;
+    color: #ddd;
+    margin-bottom: 5px;
+}
+
+.signup-section .form-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.signup-section .form-group input:focus {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 10px rgba(245, 201, 44, 0.3);
+    outline: none;
+}
+
+.signup-section .form-group input::placeholder {
+    color: #bbb;
+}
+
+/* Sign Up Button */
+.cta-button {
+    padding: 15px;
+    font-size: var(--button-font-size);
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    background-color: var(--highlight-color);
+    transform: scale(var(--cta-button-hover-scale));
+}
+
+/* Link Styles */
+.signup-section p {
+    text-align: center;
+    margin-top: 20px;
+    color: #ddd;
+}
+
+.signup-section p a {
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+
+.signup-section p a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer p {
+    color: #b0b0b0;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .signup-section h2 {
+        font-size: 2.5rem;
+    }
+
+    .signup-section .container {
+        padding: 30px;
+    }
+
+    .cta-button {
+        font-size: 1rem;
+    }
+}

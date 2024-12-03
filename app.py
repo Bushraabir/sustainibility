@@ -1,144 +1,179 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_session import Session
+from datetime import datetime
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-# Initialize the Flask application
+# Initialize Flask application
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///events.db'
+
+# Configuration settings
+app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure secret key
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yourdatabase.db'  # Use your database URI here
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secret key
-app.config['SESSION_TYPE'] = 'filesystem'  # To store session data on the filesystem
-
-# Initialize the database and session
 db = SQLAlchemy(app)
-Session(app)
 
-# User model definition
-class User(db.Model):
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'  # Set the login route
+
+# Models
+
+# User Model
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)  # Stored password hash
-    
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+
     def __repr__(self):
         return f'<User {self.username}>'
 
-# Event model definition
+# Event Model
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     location = db.Column(db.String(200), nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=True)
-    host = db.Column(db.String(100), nullable=True)
-    image_url = db.Column(db.String(300), nullable=True)
-    rsvp_count = db.Column(db.Integer, default=0)
-    
+    host = db.Column(db.String(100))
+    image_url = db.Column(db.String(300))
+
     def __repr__(self):
         return f'<Event {self.name}, {self.location}>'
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'location': self.location,
-            'start_date': self.start_date.strftime('%Y-%m-%d %H:%M:%S'),
-            'end_date': self.end_date.strftime('%Y-%m-%d %H:%M:%S') if self.end_date else None,
-            'host': self.host,
-            'image_url': self.image_url,
-            'rsvp_count': self.rsvp_count
-        }
+# SustainabilityTip Model
+class SustainabilityTip(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-# Route for user registration (Signup)
+    def __repr__(self):
+        return f'<SustainabilityTip {self.title}>'
+
+# ActivityLog Model
+class ActivityLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(255), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('activities', lazy=True))
+
+    def __repr__(self):
+        return f'<ActivityLog {self.user.username} - {self.action} at {self.timestamp}>'
+
+# Flask-Login user loader
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Routes
+
+# Home Route
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Login Route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            session['username'] = user.username
+
+            if session['username'] == 'abir':  # Admin user
+                flash('Login successful!', 'success')
+                return redirect(url_for('admin_page'))  # Redirect to the admin page if logged in
+            else:
+                flash('Login successful! You are not an admin.', 'success')
+                return redirect(url_for('home'))  # Regular user homepage
+        else:
+            flash('Invalid username or password', 'danger')
+            return redirect(url_for('login'))
+
+    return render_template('login.html')
+
+# Signup Route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
-        # Special check for admin user
-        if username == 'abir':
-            password = 'neelaabir'  # Set a predefined password for the admin
-        
-        # Hash the password
-        hashed_password = generate_password_hash(password, method='sha256')
-        
-        # Create a new user object
-        new_user = User(username=username, password=hashed_password)
-        
-        # Check if the username already exists
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash('Passwords do not match', 'danger')
+            return redirect(url_for('signup'))
+
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            return 'Username already exists! Please choose another.'
-        
-        # Add the new user to the database
+            flash('Username already taken', 'danger')
+            return redirect(url_for('signup'))
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        
-        return redirect(url_for('login'))  # Redirect to login after successful signup
+        flash('Account created successfully!', 'success')
+        return redirect(url_for('login'))
 
     return render_template('signup.html')
 
-# Route for user login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        # Get the username and password from the form
-        username = request.form.get('username')  # Use .get() to avoid KeyError
-        password = request.form.get('password')
+# Admin Page Route
+# Route to fetch and render activity logs
+@app.route('/admin')
+def admin_page():
+    if current_user.is_authenticated and session.get('username') == 'abir':
+        # Fetch the total number of users, events, and activities
+        user_count = User.query.count()
+        event_count = Event.query.count()
+        upcoming_events = Event.query.filter(Event.start_date > datetime.now()).count()
+        events = Event.query.all()
 
-        # Debugging: print the form data to verify
-        print(f"Attempting login with Username: {username}, Password: {password}")
+        # Fetch recent activity logs from the database
+        activity_logs = ActivityLog.query.order_by(ActivityLog.timestamp.desc()).limit(10).all()
 
-        if not username or not password:
-            return 'Please fill in both fields', 400  # Optional: return an error if fields are empty
+        # Prepare the activity logs to pass to the template (converting to a format usable in JS)
+        logs = [{
+            'user': log.user.username,  # Get the username of the user associated with the activity log
+            'action': log.action,
+            'timestamp': log.timestamp.strftime('%Y-%m-%d %H:%M:%S')  # Format the timestamp
+        } for log in activity_logs]
 
-        # Normalize username to lower case for case-insensitive comparison
-        username = username.lower()  # Convert username to lowercase for case-insensitive check
-        
-        # Check if the user exists
-        user = User.query.filter_by(username=username).first()
+        # Render the admin page with activity logs
+        return render_template('admin_page.html', 
+                               user_count=user_count, 
+                               event_count=event_count, 
+                               upcoming_events=upcoming_events, 
+                               events=events, 
+                               activity_logs=logs)  # Pass activity logs to the template
 
-        if user:
-            # Debugging: print user and password hash comparison
-            print(f"Found user: {user.username}, Stored Password Hash: {user.password}")
-            
-            # Check if the password matches the stored hash
-            if check_password_hash(user.password, password):
-                session['user_id'] = user.id
-                session['username'] = user.username
-                return redirect(url_for('events'))  # Redirect to events page upon successful login
-            else:
-                print("Password mismatch")
+    else:
+        flash('You must be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
 
-        return 'Invalid credentials, please try again.', 401  # Invalid credentials message
+# Event Routes
 
-    return render_template('login.html')  # Render the login form
+@app.route('/events')
+@login_required
+def events():
+    events = Event.query.all()
+    return render_template('events.html', events=events)
 
-# Route for logging out
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('username', None)
-    return redirect(url_for('login'))
-
-# Route for updating event details
 @app.route('/update-event/<int:event_id>', methods=['GET', 'POST'])
-def update_event(event_id):
-    if 'username' not in session:
-        return redirect(url_for('login'))  # If the user is not logged in, redirect to login page
+@login_required
+def admin_update_events(event_id):
+    event = Event.query.get_or_404(event_id)
 
-    # Only the admin can access this route
-    if session['username'] != 'abir':  # Ensure the logged-in user is admin (with username 'abir')
-        return 'Unauthorized access', 403
-
-    event = Event.query.get_or_404(event_id)  # Get the event by ID or return 404 if not found
-    
     if request.method == 'POST':
-        # Update the event details with form data
         event.name = request.form['name']
         event.description = request.form['description']
         event.location = request.form['location']
@@ -146,38 +181,203 @@ def update_event(event_id):
         event.end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M') if request.form['end_date'] else None
         event.host = request.form['host']
         event.image_url = request.form['image_url']
-        
-        # Commit the updated event to the database
+
         db.session.commit()
-        
-        return redirect(url_for('events'))  # Redirect to the events page after update
-    
-    return render_template('update_event.html', event=event)
+        flash('Event updated successfully', 'success')
+        return redirect(url_for('events'))
 
-# Route to serve the event data as JSON
-@app.route('/api/events')
-def get_events():
-    events = Event.query.all()  # Get all events from the database
-    events_data = [event.to_dict() for event in events]  # Convert events to a list of dictionaries
-    return jsonify(events_data)
+    return render_template('admin_update_event.html', event=event)
 
-# Route for the Home page
-@app.route('/')
-def home():
-    return render_template('index.html')
+@app.route('/create-event', methods=['GET', 'POST'])
+def create_event():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        location = request.form['location']
+        start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M')
+        end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M') if request.form['end_date'] else None
+        host = request.form['host']
+        image_url = request.form['image_url']
 
-# Route for the Events page
-@app.route('/events')
-def events():
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Redirect to login if not logged in
-    
-    events = Event.query.all()  # Fetch all events
-    return render_template('events.html', events=events)
+        new_event = Event(name=name, description=description, location=location, start_date=start_date,
+                          end_date=end_date, host=host, image_url=image_url)
+        db.session.add(new_event)
+        db.session.commit()
+
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('events'))  # Redirect to events page after creation
+
+    return render_template('create_event.html')
+
+# Event Add Route (Admin Only)
+@app.route('/admin_add_event', methods=['GET', 'POST'])
+@login_required
+def admin_add_event():
+    if session.get('username') != 'abir':
+        flash('You need to be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        location = request.form['location']
+        start_date = datetime.strptime(request.form['start_date'], '%Y-%m-%dT%H:%M')
+        end_date = datetime.strptime(request.form['end_date'], '%Y-%m-%dT%H:%M') if request.form['end_date'] else None
+        host = request.form['host']
+        image_url = request.form['image_url']
+
+        new_event = Event(name=name, description=description, location=location,
+                          start_date=start_date, end_date=end_date, host=host, image_url=image_url)
+
+        db.session.add(new_event)
+        db.session.commit()
+
+        flash('Event added successfully!', 'success')
+        return redirect(url_for('events'))  # Redirect to the events page after adding the event
+
+    return render_template('admin_add_event.html')
+
+# Manage Users Routes
+
+@app.route('/admin_manage_users')
+def admin_manage_users():
+    if current_user.is_authenticated and session.get('username') == 'abir':
+        users = User.query.all()
+        return render_template('admin_manage_users.html', users=users)
+    else:
+        flash('You need to be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
+
+@app.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def edit_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if request.method == 'POST':
+        user.username = request.form['username']
+        if request.form['password']:
+            user.password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
+
+        db.session.commit()
+        flash('User updated successfully!', 'success')
+        return redirect(url_for('admin_manage_users'))
+
+    return render_template('admin_edit_user.html', user=user)
+
+@app.route('/admin_add_user', methods=['GET', 'POST'])
+@login_required
+def admin_add_user():
+    if session.get('username') != 'abir':
+        flash('You need to be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if password != confirm_password:
+            flash('Passwords do not match', 'danger')
+            return redirect(url_for('admin_add_user'))
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('Username already taken', 'danger')
+            return redirect(url_for('admin_add_user'))
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        new_user = User(username=username, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('User created successfully!', 'success')
+        return redirect(url_for('admin_manage_users'))
+
+    return render_template('admin_add_user.html')
+
+@app.route('/delete-user/<int:user_id>', methods=['POST'])
+@login_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted successfully!', 'success')
+    return redirect(url_for('admin_manage_users'))
+
+# Sustainability Tips Routes
+
+@app.route('/sustainability-tips')
+def sustainability_tips():
+    if current_user.is_authenticated and session.get('username') == 'abir':
+        tips = SustainabilityTip.query.all()
+        return render_template('sustainability_tips.html', tips=tips)
+    else:
+        flash('You need to be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
+
+@app.route('/add-sustainability-tip', methods=['GET', 'POST'])
+@login_required
+def add_sustainability_tip():
+    if session.get('username') != 'abir':
+        flash('You need to be an admin to access this page', 'danger')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        new_tip = SustainabilityTip(title=title, content=content)
+        db.session.add(new_tip)
+        db.session.commit()
+
+        flash('Sustainability tip added successfully!', 'success')
+        return redirect(url_for('sustainability_tips'))
+
+    return render_template('add_sustainability_tip.html')
+
+@app.route('/edit-sustainability-tip/<int:tip_id>', methods=['GET', 'POST'])
+@login_required
+def edit_sustainability_tip(tip_id):
+    tip = SustainabilityTip.query.get_or_404(tip_id)
+
+    if request.method == 'POST':
+        tip.title = request.form['title']
+        tip.content = request.form['content']
+
+        db.session.commit()
+        flash('Sustainability tip updated successfully!', 'success')
+        return redirect(url_for('sustainability_tips'))
+
+    return render_template('edit_sustainability_tip.html', tip=tip)
+
+@app.route('/delete-sustainability-tip/<int:tip_id>', methods=['POST'])
+@login_required
+def delete_sustainability_tip(tip_id):
+    tip = SustainabilityTip.query.get_or_404(tip_id)
+    db.session.delete(tip)
+    db.session.commit()
+
+    flash('Sustainability tip deleted successfully!', 'success')
+    return redirect(url_for('sustainability_tips'))
+
+# Logout Route
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()  # Use Flask-Login's logout_user method
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('login'))
 
 # Main entry point to start the app
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Create database tables for our data models
-        
+        db.create_all()  # Create tables if they don't exist
+        # Ensure admin user 'abir' exists
+        admin = User.query.filter_by(username='abir').first()
+        if not admin:
+            hashed_password = generate_password_hash('neelaabir', method='pbkdf2:sha256')
+            admin = User(username='abir', password=hashed_password)
+            db.session.add(admin)
+            db.session.commit()
+
     app.run(debug=True)

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_page.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Welcome, {{ session['username'] }}!</h1>
+        <p class="subtitle">Admin Dashboard</p>
+        <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main class="admin-main">
+        <!-- Statistics Section -->
+        <section class="stats-section">
+            <h2>Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <p>{{ user_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Events</h3>
+                    <p>{{ event_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Upcoming Events</h3>
+                    <p>{{ upcoming_events }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions Section -->
+        <section class="admin-actions">
+            <h2>Quick Actions</h2>
+            <div class="actions-grid">
+                <!-- Display event list with action links -->
+                {% if events %}
+                    <ul>
+                        {% for event in events %}
+                            <li>
+                                <strong>{{ event.name }}</strong> - {{ event.location }}
+                                <a href="{{ url_for('admin_update_events', event_id=event.id) }}" class="action-btn">Update Event</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No events available to manage.</p>
+                {% endif %}
+                <a href="{{ url_for('admin_add_event') }}" class="action-btn">Add Event</a>
+                <a href="{{ url_for('admin_manage_users') }}" class="action-btn">Manage Users</a>
+            </div>
+        </section>
+
+        <!-- Recent Activity Section -->
+        <section class="recent-logs">
+            <h2>Recent User Activity</h2>
+            <ul id="activity-log">
+                <!-- Logs populated dynamically -->
+                <!-- You can add code here to dynamically list recent logs if needed -->
+            </ul>
+        </section>
+    </main>
+
+    <!-- Linking to the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/admin_page.js') }}"></script>
+</body>
+
+</html>

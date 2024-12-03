@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_edit_user.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Edit User</h1>
+        <p class="subtitle">Admin Dashboard - Edit User Details</p>
+        <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main class="admin-main">
+        <!-- Edit User Form Section -->
+        <section class="edit-user-section">
+            <form action="{{ url_for('edit_user', user_id=user.id) }}" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+
+                <button type="submit" class="cta-button">Update User</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/admin_edit_user.js') }}"></script>
+</body>
+
+</html>

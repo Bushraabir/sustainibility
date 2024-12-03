@@ -1,0 +1,133 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+.admin-header {
+    background-color: #004d40;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.admin-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.admin-header .subtitle {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c62828;
+}
+
+/* Main Content */
+.admin-main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+/* Statistics Section */
+.stats-section h2,
+.admin-actions h2,
+.recent-logs h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #004d40;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: #333;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    margin: 0.5rem 0 0;
+    color: #004d40;
+}
+
+/* Actions Section */
+.actions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.action-btn {
+    background-color: #00796b;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    background-color: #004d40;
+}
+
+/* Recent Logs Section */
+.recent-logs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent-logs li {
+    background: white;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.recent-logs li span {
+    font-weight: bold;
+}

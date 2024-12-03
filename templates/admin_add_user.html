@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User - Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_add_user.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Add New User</h1>
+        <p class="subtitle">Admin Dashboard - Add New User</p>
+        <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main class="admin-main">
+        <section class="add-user-section">
+            <h2>Create a New User</h2>
+            
+            <form action="{{ url_for('admin_add_user') }}" method="POST">
+                <!-- Username input -->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <!-- Confirm Password input -->
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="cta-button">Add User</button>
+            </form>
+
+            {% if flash_messages %}
+            <div class="flash-messages">
+                {% for message in flash_messages %}
+                    <div class="flash {{ message[0] }}">{{ message[1] }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <!-- Linking to the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/admin_add_user.js') }}"></script>
+</body>
+
+</html>

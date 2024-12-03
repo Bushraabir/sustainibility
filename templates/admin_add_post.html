@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sustainability Tip</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_sustainability_tip.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Add Sustainability Tip</h1>
+        <p class="subtitle">Admin Dashboard - Add New Sustainability Tip</p>
+        <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main class="admin-main">
+        <section class="add-tip-section">
+            <form action="{{ url_for('admin_add_post') }}" method="POST">
+                <div class="form-group">
+                    <label for="title">Tip Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Tip Content:</label>
+                    <textarea id="content" name="content" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button">Add Tip</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/add_sustainability_tip.js') }}"></script>
+</body>
+
+</html>

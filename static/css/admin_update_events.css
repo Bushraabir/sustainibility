@@ -1,0 +1,185 @@
+/* Root Variables for Consistency */
+:root {
+    --primary-color: #004d40; /* Deep Teal */
+    --secondary-color: #00332e; /* Muted Dark Green */
+    --accent-color: #f2c94c; /* Warm Metallic Gold */
+    --background-color: #2f3e46; /* Charcoal Grey */
+    --text-color: #b0b0b0; /* Soft Grey for Text */
+    --highlight-color: #f5c92c; /* Soft Gold Highlight */
+    --link-hover-color: #007bff; /* Standard Blue */
+    --text-shadow-color: rgba(0, 0, 0, 0.4);
+
+    /* Background Effects */
+    --background-gradient: linear-gradient(120deg, rgba(0, 51, 46, 0.85), rgba(0, 77, 64, 0.6), rgba(0, 51, 46, 0.85));
+
+    /* Button and Link Interactions */
+    --cta-button-hover-scale: 1.1;
+    --button-hover-scale: 1.1;
+
+    /* Typography */
+    --font-family: 'Playfair Display', serif; /* Added font-family variable */
+    --heading-font-size: 3rem;
+    --body-font-size: 1rem;
+    --line-height: 1.6;
+
+    /* Borders and Rounding */
+    --border-radius: 15px;
+
+    /* Animations */
+    --transition-speed: 0.4s ease;
+
+    /* Miscellaneous */
+    --button-font-size: 1.2rem;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-family: var(--font-family);
+    font-size: var(--heading-font-size);
+    color: var(--primary-color);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* NAVIGATION BAR */
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: var(--primary-color);
+    padding: 15px 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.navbar .logo a {
+    font-family: var(--font-family);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links .nav-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.nav-links .nav-btn:hover {
+    color: var(--highlight-color);
+}
+
+/* Event Update Section */
+.update-event-section {
+    padding: 60px 0;
+    background-color: #fff;
+    border-top: 4px solid var(--accent-color);
+}
+
+.update-event-section .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: var(--border-radius);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+.form-group input[type="datetime-local"] {
+    padding: 10px;
+}
+
+.cta-button {
+    background-color: var(--highlight-color);
+    color: white;
+    font-size: var(--button-font-size);
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform var(--transition-speed), background-color var(--transition-speed);
+}
+
+.cta-button:hover {
+    transform: scale(var(--cta-button-hover-scale));
+    background-color: #e06d47;
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 12px;
+    height: 12px;
+    background-color: var(--highlight-color);
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: cursorAnim 0.5s ease-in-out infinite;
+}
+
+@keyframes cursorAnim {
+    0% { transform: scale(0.8) translate(-50%, -50%); }
+    50% { transform: scale(1) translate(-50%, -50%); }
+    100% { transform: scale(0.8) translate(-50%, -50%); }
+}

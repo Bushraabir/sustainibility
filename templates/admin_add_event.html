@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_add_event.css') }}">
+</head>
+
+<body>
+    <header class="admin-header">
+        <h1>Add New Event</h1>
+        <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+    </header>
+
+    <main class="admin-main">
+        <!-- Add Event Form Section -->
+        <section class="add-event-section">
+            <div class="container">
+                <form action="{{ url_for('admin_add_event') }}" method="POST">
+                    <div class="form-group">
+                        <label for="name">Event Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start_date">Start Date:</label>
+                        <input type="datetime-local" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end_date">End Date:</label>
+                        <input type="datetime-local" id="end_date" name="end_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="host">Host:</label>
+                        <input type="text" id="host" name="host">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image_url">Image URL:</label>
+                        <input type="text" id="image_url" name="image_url">
+                    </div>
+
+                    <button type="submit" class="cta-button">Add Event</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Linking to the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/admin_add_event.js') }}"></script>
+</body>
+
+</html>

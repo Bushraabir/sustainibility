@@ -8,27 +8,23 @@
     <meta name="author" content="Sustainability Adventure Team">
     <title>Update Event</title>
 
-    <!-- Linking to the CSS file using Flask's url_for -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/update_events.css') }}">
-
     <!-- Google Fonts: Poppins and Playfair Display -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+    <!-- Linking to the CSS file using Flask's url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_update_events.css') }}">
 </head>
 
 <body>
-    <div class="custom-cursor"></div>
-
     <!-- NAVIGATION BAR -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
                 <a href="/" class="logo-link">Sustainability Adventure</a>
             </div>
-
             <ul class="nav-links">
                 <li><a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About Us</a></li>
                 <li><a href="#features" class="nav-btn"><i class="fas fa-cogs"></i> Features</a></li>
@@ -42,42 +38,42 @@
     <section class="update-event-section">
         <div class="container">
             <h2>Update Event: {{ event.name }}</h2>
-            <form action="{{ url_for('update_event', event_id=event.id) }}" method="POST">
+            <form action="{{ url_for('admin_update_events', event_id=event.id) }}" method="POST">
                 <div class="form-group">
                     <label for="name">Event Name:</label>
                     <input type="text" id="name" name="name" value="{{ event.name }}" required>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="description">Description:</label>
                     <textarea id="description" name="description" required>{{ event.description }}</textarea>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="location">Location:</label>
                     <input type="text" id="location" name="location" value="{{ event.location }}" required>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="start_date">Start Date:</label>
                     <input type="datetime-local" id="start_date" name="start_date" value="{{ event.start_date.strftime('%Y-%m-%dT%H:%M') }}" required>
                 </div>
-
+            
                 <div class="form-group">
                     <label for="end_date">End Date:</label>
                     <input type="datetime-local" id="end_date" name="end_date" value="{{ event.end_date.strftime('%Y-%m-%dT%H:%M') if event.end_date else '' }}">
                 </div>
-
+            
                 <div class="form-group">
                     <label for="host">Host:</label>
                     <input type="text" id="host" name="host" value="{{ event.host }}">
                 </div>
-
+            
                 <div class="form-group">
                     <label for="image_url">Image URL:</label>
                     <input type="text" id="image_url" name="image_url" value="{{ event.image_url }}">
                 </div>
-
+            
                 <button type="submit" class="cta-button">Update Event</button>
             </form>
         </div>
@@ -91,8 +87,7 @@
     </footer>
 
     <!-- Linking to the JS file using Flask's url_for -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/admin_update_events.js') }}"></script>
 </body>
 
 </html>
