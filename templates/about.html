@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('sustainability_tips') }}">Sustainability Tips</a></li>
+                <li><a href="{{ url_for('success_stories') }}">Success Stories</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h1>About Us</h1>
+        <p>Our mission is to promote environmental awareness and sustainability practices that help protect our planet for future generations.</p>
+    </section>
+
+    <footer>
+        <p>© 2024 Sustainability Advocacy. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

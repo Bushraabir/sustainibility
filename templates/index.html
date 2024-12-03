@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Adventure</title>
+    
+    <!-- Linking to the CSS file using Flask's url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Fonts: Playfair Display, Lora, Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/1.jpg') }}" type="image/x-icon">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <div class="custom-cursor"></div>
+
+
+    <header class="hero">
+        <div class="overlay"></div>
+        <video class="hero-video" autoplay muted loop>
+            <source src="{{ url_for('static', filename='videos/1.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span class="highlight-text">Sustainability</span> Adventure Awaits!
+            </h1>
+            <p class="hero-description">
+                Small actions, big rewards. Join a journey where your steps shape a sustainable tomorrow.
+            </p>
+            <a href="#explore" class="cta-button">
+                <i class="fas fa-leaf"></i> Begin Your Journey
+            </a>
+        </div>
+        <canvas class="particle-canvas"></canvas>
+    </header>
+    
+
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#">Sustainability Adventure</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="#features" class="nav-btn"><i class="fas fa-cogs"></i> Features</a></li>
+                <li><a href="#rewards" class="nav-btn"><i class="fas fa-gift"></i> Rewards</a></li>
+                <li><a href="#contact" class="nav-btn"><i class="fas fa-envelope"></i> Get in Touch</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Open menu">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- ABOUT SECTION WITH GAMIFICATION DESCRIPTION -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>What is Sustainability Adventure?</h2>
+            <p>Join us on a journey of discovery where small actions lead to big rewards. Complete fun challenges, learn simple sustainability tips, and connect with a community of like-minded changemakers. Together, we can make the world a better place!</p>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION WITH INTERACTIVE CARDS -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2>Our Features</h2>
+            <div class="feature-cards">
+                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
+                    <h3>Fun & Interactive Challenges</h3>
+                    <p>Complete challenges, earn points, and enjoy the rewards that come with making a difference!</p>
+                    <a href="#challenges" class="btn-link">Join Now</a>
+                </div>
+                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
+                    <h3>Inspiring Success Stories</h3>
+                    <p>Get inspired by real people making a change and discover ways you can contribute to a sustainable future.</p>
+                    <a href="#stories" class="btn-link">Get Inspired</a>
+                </div>
+                <div class="feature-card" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');">
+                    <h3>Supportive Community</h3>
+                    <p>Join events, share your experiences, and become part of a community that believes in positive change!</p>
+                    <a href="#community" class="btn-link">Find Events Near You</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REWARDS SECTION WITH POINTS SYSTEM -->
+    <section id="rewards" class="rewards-section">
+        <div class="container">
+            <h2>Earn Rewards & Make a Difference</h2>
+            <p>Each action you take brings us one step closer to a more sustainable world. Earn badges, discounts, and more as a thank you for your commitment!</p>
+            <div class="rewards-cards">
+                <div class="reward-card">
+                    <h3>Eco Warrior</h3>
+                    <p>Complete 10 sustainability challenges and wear your badge with pride!</p>
+                </div>
+                <div class="reward-card">
+                    <h3>Green Leader</h3>
+                    <p>Reach 100 points and unlock a special surprise to celebrate your achievements!</p>
+                </div>
+                <div class="reward-card">
+                    <h3>Community Hero</h3>
+                    <p>Participate in 5 community events and earn bonus rewards for your efforts!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION WITH INTERACTIVE SCROLL SLIDER -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2>What Our Community Says</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"This platform made sustainability so much fun! I'm learning and making a difference, and the rewards keep me motivated!"</p>
+                    <h4>- Jane D.</h4>
+                </div>
+                <div class="testimonial">
+                    <p>"The community events are incredible! It's wonderful to meet others who are also passionate about sustainability."</p>
+                    <h4>- Michael T.</h4>
+                </div>
+                <div class="testimonial">
+                    <p>"I’ve learned so many simple tips to help the environment, and it feels great to be part of something bigger."</p>
+                    <h4>- Lisa K.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>We’d Love to Hear From You</h2>
+            <p>If you have any questions, suggestions, or just want to share your journey with us, feel free to reach out!</p>
+            <form class="contact-form">
+                <input type="email" placeholder="Your email address" required>
+                <textarea placeholder="Your message" required></textarea>
+                <button type="submit" class="cta-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-top">
+                <div class="footer-links">
+                    <a href="#about"><i class="fas fa-info-circle"></i> About</a> |
+                    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a> |
+                    <a href="#features"><i class="fas fa-cogs"></i> Features</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <p>© 2024 Sustainability Adventure. All Rights Reserved. Together, we can create change.</p>
+        </div>
+    </footer>
+
+    <!-- Linking the JS file using Flask's url_for -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
